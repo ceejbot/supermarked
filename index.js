@@ -22,8 +22,10 @@ function supermarked(src, options) {
       } catch (ex) {}
     }
   }
+
   var tokens = marked.lexer(src, options);
-  var result = marked.parser(tokens, options)
+  var result = marked.parser(tokens, options);
+
   if (!options.ignoreMentions) {
     var services = options.services || exports.services;
     result = result.replace(/([^ ]+): *@([A-Za-z0-9_-]+)/, function (_, service, user) {
@@ -32,9 +34,9 @@ function supermarked(src, options) {
           return '<a href="'
            + services[service].replace(':user:', user)
            + '" class="user-profile user-profile-'
-           + service 
-           + '">@' 
-           + user 
+           + service
+           + '">@'
+           + user
            + '</a>';
         } else {
           return _;
@@ -44,8 +46,8 @@ function supermarked(src, options) {
         if (services['@']) {
           return ' <a href="'
            + services['@'].replace(':user:', user)
-           + '" class="user-profile">@' 
-           + user 
+           + '" class="user-profile">@'
+           + user
            + '</a>';
         } else {
           return _;
@@ -67,7 +69,7 @@ var services = exports.services = {
   'github': 'https://github.com/:user:',
   'npm': 'https://npmjs.org/~:user:',
   'facebook': 'https://www.facebook.com/:user:',
-  'local': '/user/:user:'
+  'local': '/@:user:'
 };
 services['@'] = services.local;//set the default here
 
